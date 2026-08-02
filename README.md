@@ -16,7 +16,7 @@ Welcome to the **GitHub Actions Practice** workspace! This repository is configu
 │   ├── settings.json        # Configures Devbox shell & YAML schema validation
 │   └── extensions.json      # Workspace extension recommendations
 ├── .gitignore               # Configured for macOS, Devbox, Node, Python, and IDE state
-├── devbox.json              # Devbox configuration (Docker 29.6.2, Node.js 22)
+├── devbox.json              # Devbox configuration (Docker 29.6.2, Node.js 24)
 └── README.md
 ```
 
@@ -28,7 +28,7 @@ This project uses **[Devbox](https://www.jetify.com/devbox)** to manage system d
 
 ### Packages Included
 - **Docker** (`29.6.2`)
-- **Node.js** (`22`)
+- **Node.js** (`24`)
 
 ### Quick Start
 
