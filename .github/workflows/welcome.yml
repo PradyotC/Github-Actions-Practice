@@ -1,0 +1,42 @@
+name: GitHub Actions Practice & Learning
+
+# Triggers: Events that start this workflow
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  # Allows manual execution from the GitHub Actions tab in your repository
+  workflow_dispatch:
+    inputs:
+      greeting_name:
+        description: 'Name to greet in the workflow'
+        required: false
+        default: 'GitHub Actions Learner'
+
+jobs:
+  explore-actions:
+    name: Explore GitHub Actions Basics
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: 2. Log runner context and event details
+        run: |
+          echo "🎉 Workflow triggered by: ${{ github.event_name }} event"
+          echo "🐧 Runner OS: ${{ runner.os }}"
+          echo "📁 Repository: ${{ github.repository }}"
+          echo "🌿 Branch: ${{ github.ref_name }}"
+          echo "👤 Triggered by user: ${{ github.actor }}"
+
+      - name: 3. Custom greeting step
+        run: |
+          GREET_NAME="${{ inputs.greeting_name || 'Developer' }}"
+          echo "Hello, $GREET_NAME! Welcome to GitHub Actions practice."
+
+      - name: 4. List workspace contents
+        run: |
+          echo "Files in directory:"
+          ls -la
