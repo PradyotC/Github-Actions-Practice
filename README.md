@@ -9,6 +9,7 @@ Welcome to the **GitHub Actions Practice** workspace! This repository is configu
 ```text
 .
 ├── .github/
+│   ├── dependabot.yml       # Automated weekly action updates
 │   └── workflows/
 │       ├── welcome.yml      # Beginner-friendly workflow demonstrating events & context
 │       └── ci.yml           # Starter CI pipeline for testing & building
@@ -16,7 +17,7 @@ Welcome to the **GitHub Actions Practice** workspace! This repository is configu
 │   ├── settings.json        # Configures Devbox shell & YAML schema validation
 │   └── extensions.json      # Workspace extension recommendations
 ├── .gitignore               # Configured for macOS, Devbox, Node, Python, and IDE state
-├── devbox.json              # Devbox configuration (Docker 29.6.2, Node.js 24)
+├── devbox.json              # Devbox configuration (Docker, Node.js, act local runner)
 └── README.md
 ```
 
@@ -29,6 +30,7 @@ This project uses **[Devbox](https://www.jetify.com/devbox)** to manage system d
 ### Packages Included
 - **Docker** (`29.6.2`)
 - **Node.js** (`24`)
+- **act** (`latest`) — Local GitHub Actions runner
 
 ### Quick Start
 
@@ -45,13 +47,39 @@ This project uses **[Devbox](https://www.jetify.com/devbox)** to manage system d
 
 ---
 
+## ⚡ Local Workflow Execution (`act`)
+
+You can run and test your GitHub Actions locally on your Mac using **`act`** (installed via Devbox).
+
+### Commands (inside Devbox shell):
+
+* **List available workflows & jobs**:
+  ```bash
+  devbox run act:list
+  # or directly: act -l
+  ```
+
+* **Dry run (simulate without executing)**:
+  ```bash
+  devbox run act:dry-run
+  # or directly: act -n --container-architecture linux/amd64
+  ```
+
+* **Run workflows locally**:
+  ```bash
+  devbox run act:run
+  # or directly: act --container-architecture linux/amd64
+  ```
+
+---
+
 ## 🤖 GitHub Actions Workflows
 
 ### 1. `welcome.yml` ([View Workflow](file://.github/workflows/welcome.yml))
 Demonstrates core GitHub Actions concepts:
 - **Triggers**: `push`, `pull_request`, and manual `workflow_dispatch`.
 - **Context Variables**: Accessing `${{ github.repository }}`, `${{ github.actor }}`, `${{ runner.os }}`.
-- **Actions**: Checking out repository code using `actions/checkout@v4`.
+- **Actions**: Checking out repository code using `actions/checkout@v7`.
 
 ### 2. `ci.yml` ([View Workflow](file://.github/workflows/ci.yml))
 A baseline Continuous Integration pipeline template for testing and building code.
@@ -66,11 +94,11 @@ A baseline Continuous Integration pipeline template for testing and building cod
 | **Event (`on`)** | The activity that triggers the workflow (e.g. `push`, `pull_request`, `workflow_dispatch`). |
 | **Job (`jobs`)** | A set of steps executed on a runner instance (e.g. `ubuntu-latest`). |
 | **Step (`steps`)** | An individual task running shell commands (`run`) or actions (`uses`). |
-| **Action (`uses`)** | Reusable code block from the GitHub Marketplace (e.g. `actions/checkout@v4`). |
+| **Action (`uses`)** | Reusable code block from the GitHub Marketplace (e.g. `actions/checkout@v7`). |
 
 ---
 
-## 💡 How to Trigger Workflows
+## 💡 How to Trigger Workflows on GitHub
 
 1. **Push or Pull Request**: Push a commit or create a PR targeting `main` or `master`.
 2. **Manual Execution**: Go to the **Actions** tab on GitHub -> Select **GitHub Actions Practice & Learning** -> Click **Run workflow**.

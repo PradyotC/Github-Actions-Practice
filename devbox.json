@@ -2,15 +2,22 @@
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.17.5/.schema/devbox.schema.json",
   "packages": [
     "docker@29.6.2",
-    "nodejs@24"
+    "nodejs@24",
+    "act@latest"
   ],
   "shell": {
     "init_hook": [
       "echo 'Welcome to devbox!' > /dev/null"
     ],
     "scripts": {
-      "test": [
-        "echo \"Error: no test specified\" && exit 1"
+      "act:list": [
+        "act -l"
+      ],
+      "act:run": [
+        "act"
+      ],
+      "act:dry-run": [
+        "act -n"
       ]
     }
   }

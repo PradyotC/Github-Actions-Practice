@@ -44,6 +44,11 @@ htmlcov/
 *.pem
 *.key
 
+# Act (Local GitHub Actions runner secrets/inputs)
+.secrets
+.input
+.vars
+
 # IDEs and Editors
 .idea/
 .vscode/*
