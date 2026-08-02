@@ -3,7 +3,7 @@
   "packages": [
     "docker@29.6.2",
     "nodejs@24",
-    "act@latest"
+    "act@0.2.89"
   ],
   "shell": {
     "init_hook": [

@@ -17,7 +17,9 @@ Welcome to the **GitHub Actions Practice** workspace! This repository is configu
 │   ├── settings.json        # Configures Devbox shell & YAML schema validation
 │   └── extensions.json      # Workspace extension recommendations
 ├── .gitignore               # Configured for macOS, Devbox, Node, Python, and IDE state
+├── .actrc                   # Local runner config (fixes Apple Silicon M-series warnings)
 ├── devbox.json              # Devbox configuration (Docker, Node.js, act local runner)
+├── devbox.lock              # Lockfile ensuring reproducible package versions
 └── README.md
 ```
 
@@ -30,7 +32,7 @@ This project uses **[Devbox](https://www.jetify.com/devbox)** to manage system d
 ### Packages Included
 - **Docker** (`29.6.2`)
 - **Node.js** (`24`)
-- **act** (`latest`) — Local GitHub Actions runner
+- **act** (`0.2.89`) — Local GitHub Actions runner
 
 ### Quick Start
 
@@ -42,33 +44,51 @@ This project uses **[Devbox](https://www.jetify.com/devbox)** to manage system d
 2. **IDE Integration (Antigravity IDE / VS Code)**:
    - The workspace is pre-configured ([.vscode/settings.json](file://.vscode/settings.json)) to open `devbox shell` by default in the integrated terminal.
    - Recommended extensions ([.vscode/extensions.json](file://.vscode/extensions.json)):
-     - **GitHub Actions** (`github.vscode-github-actions`): Workflow syntax highlighting & status overview.
+   - **GitHub Actions** (`github.vscode-github-actions`): Workflow syntax highlighting & status overview.
      - **YAML by Red Hat** (`redhat.vscode-yaml`): Real-time schema validation and auto-formatting for `.github/workflows/*.yml`.
+
+---
+
+## 🧹 Maintenance & Troubleshooting
+
+Because Devbox uses Nix under the hood to manage packages, the Nix store can grow large over time as you add or update packages.
+
+To free up disk space and remove old, unused packages, run:
+```bash
+nix-collect-garbage -d
+```
+*Note: Run this outside the devbox shell if possible, or just be aware it cleans up the global Nix store.*
 
 ---
 
 ## ⚡ Local Workflow Execution (`act`)
 
 You can run and test your GitHub Actions locally on your Mac using **`act`** (installed via Devbox).
+*Note: We use a `.actrc` file to automatically configure `act` to work seamlessly on Apple Silicon (M-series).*
 
 ### Commands (inside Devbox shell):
 
 * **List available workflows & jobs**:
   ```bash
-  devbox run act:list
-  # or directly: act -l
+  act -l
+  # or via devbox shortcut: devbox run act:list
+  ```
+
+* **Run a specific job**:
+  ```bash
+  act -j build-and-test
   ```
 
 * **Dry run (simulate without executing)**:
   ```bash
-  devbox run act:dry-run
-  # or directly: act -n --container-architecture linux/amd64
+  act -j build-and-test -n
+  # or via devbox shortcut: devbox run act:dry-run
   ```
 
-* **Run workflows locally**:
+* **Run all workflows locally**:
   ```bash
-  devbox run act:run
-  # or directly: act --container-architecture linux/amd64
+  act
+  # or via devbox shortcut: devbox run act:run
   ```
 
 ---
