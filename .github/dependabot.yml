@@ -1,0 +1,12 @@
+# Basic Dependabot configuration for GitHub Actions
+version: 2
+updates:
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    # Check for updates once a month
+    schedule:
+      interval: "monthly"
+    # Assign reviewers to the PR automatically (optional, you can add your username here later)
+    # reviewers:
+    #   - "username"

@@ -7,6 +7,9 @@ on:
     branches: [main, master]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   build-and-test:
     name: Build & Test Job
@@ -14,7 +17,7 @@ jobs:
 
     steps:
       - name: Set up Node.js Environment (Example)
-        uses: actions/setup-node@v7.0.0
+        uses: actions/setup-node@v7
         with:
           node-version: "24"
 
@@ -26,7 +29,7 @@ jobs:
           npm -v
 
       - name: Checkout Code
-        uses: actions/checkout@v7.0.1
+        uses: actions/checkout@v7
 
       - name: Run Test Command
         run: |
